@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repository.Entities
+{
+	public class BankAccount
+	{
+		public Guid Id { get; set; }
+		public string? BankName { get; set; }
+		public string? AccountNumber { get; set; }
+		public string? AccountHolderName { get; set; }
+		public DateTime? CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+
+		public Guid UserId { get; set; }
+		public User User { get; set; }
+	}
+}
