@@ -34,4 +34,3 @@ namespace Repository.DTO
 			public DateTime? CompletedAt { get; set; }
 		}
 	}
-}

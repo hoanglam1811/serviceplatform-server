@@ -45,17 +45,17 @@ public class ServiceSolutionDbContext : DbContext
         }
     }
 
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    modelBuilder.Entity<Setting>()
-    //        .HasOne(u => u.Coach)
-    //        .WithOne(p => p.Setting)
-    //        .HasForeignKey<Setting>(p => p.CoachId);
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //modelBuilder.Entity<Setting>()
+        //    .HasOne(u => u.Coach)
+        //    .WithOne(p => p.Setting)
+        //    .HasForeignKey<Setting>(p => p.CoachId);
 
-    //    modelBuilder.Entity<PageContent>()
-    //        .HasOne(u => u.Page)
-    //        .WithOne(p => p.PageContent)
-    //        .HasForeignKey<PageContent>(p => p.PageId);
+        //modelBuilder.Entity<PageContent>()
+        //    .HasOne(u => u.Page)
+        //    .WithOne(p => p.PageContent)
+        //    .HasForeignKey<PageContent>(p => p.PageId);
 
-    //}
+    }
 }

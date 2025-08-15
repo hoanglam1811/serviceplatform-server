@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            padding: 20px;
+            color: white;
+        }
+        .content {
+            background-color: #18181b;
+            min-height: 500px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .button-19 {
+            color: white;
+            text-decoration: none;
+            appearance: button;
+            background-color: #1899D6;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: din-round,sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            line-height: 20px;
+            margin: 0;
+            outline: none;
+            overflow: visible;
+            padding: 13px 16px;
+            text-align: center;
+            text-transform: uppercase;
+            touch-action: manipulation;
+            transform: translateZ(0);
+            transition: filter .2s;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .button-19:after {
+            background-clip: padding-box;
+            background-color: #1CB0F6;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            bottom: -4px;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+        .button-19,
+        .button-19:focus {
+            user-select: auto;
+        }
+
+        .button-19:hover:not(:disabled) {
+            filter: brightness(1.1);
+            -webkit-filter: brightness(1.1);
+        }
+
+        .button-19:disabled {
+            cursor: auto;
+        }
+
+        .button-19:active {
+            border-width: 4px 0 0;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="body">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td valign="middle" style="vertical-align: middle; padding-right: 10px;">
+                    <!-- Replace this with a real PNG icon -->
+                    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+                        <path
+                        clipRule="evenodd"
+                        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        />
+                    </svg>
+                </td>
+                <td valign="middle" style="vertical-align: middle; font-family: Arial, sans-serif; font-size: 16px;">
+                    <h2>Acme</h2>
+                </td>
+            </tr>
+        </table>
+
+        <hr/>
+        <div class="content">
+            <h2>Xin chào, {{UserName}}!</h2>
+            <p>{{Content}}</p>
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                    <td align="center">
+                        <a href="http://localhost:5173" target="_blank" style="" class="button-19" role="button">Visit website</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center">
+            <tr>
+                <td align="center">
+                    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+                        <path
+                        clipRule="evenodd"
+                        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        />
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <h2 style="margin: 0px;">Acme</h2>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <p style="margin-top: 10px;">Copyright © Acme Inc. All rights reserved.</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    
+</body>
+</html>
+

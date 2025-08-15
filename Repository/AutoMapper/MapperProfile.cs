@@ -7,93 +7,71 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<CoachingProgram, CoachingProgramDTO>().ReverseMap();
-        CreateMap<CoachingProgram, CreateCoachingProgramDTO>().ReverseMap();
-        CreateMap<CoachingProgram, UpdateCoachingProgramDTO>().ReverseMap();
-        CreateMap<CoachingProgram, UpdateCoachingProgramPageDTO>().ReverseMap();
+		CreateMap<LoyaltyPoint, LoyaltyPointDTO>().ReverseMap();
+		CreateMap<LoyaltyPoint, CreateLoyaltyPointDTO>().ReverseMap();
+		CreateMap<LoyaltyPoint, UpdateLoyaltyPointDTO>().ReverseMap();
 
-		CreateMap<CoachingPackage, CoachingPackageDTO>().ReverseMap();
-		CreateMap<CoachingPackage, CreateCoachingPackageDTO>().ReverseMap();
-		CreateMap<CoachingPackage, UpdateCoachingPackageDTO>().ReverseMap();
+		CreateMap<Notification, NotificationDTO>().ReverseMap();
+		CreateMap<Notification, CreateNotificationDTO>().ReverseMap();
+		CreateMap<Notification, UpdateNotificationDTO>().ReverseMap();
 
-		CreateMap<Page, PageDTO>().ReverseMap();
-		CreateMap<Page, CreatePageDTO>().ReverseMap();
-		CreateMap<Page, UpdatePageDTO>().ReverseMap();
+		CreateMap<BankAccount, BankAccountDTO>().ReverseMap();
+		CreateMap<BankAccount, CreateBankAccountDTO>().ReverseMap();
+		CreateMap<BankAccount, UpdateBankAccountDTO>().ReverseMap();
 
-		CreateMap<PageContent, PageContentDTO>().ReverseMap();
-		CreateMap<PageContent, CreatePageContentDTO>().ReverseMap();
-		CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
+		CreateMap<Booking, BookingDTO>().ReverseMap();
+		CreateMap<Booking, CreateBookingDTO>().ReverseMap();
+		CreateMap<Booking, UpdateBookingDTO>().ReverseMap();
 
-		CreateMap<TiktokLink, TiktokLinkDTO>().ReverseMap();
-		CreateMap<TiktokLink, CreateTiktokLinkDTO>().ReverseMap();
-		CreateMap<TiktokLink, UpdateTiktokLinkDTO>().ReverseMap();
+		CreateMap<Chat, ChatDTO>().ReverseMap();
+		CreateMap<Chat, CreateChatDTO>().ReverseMap();
+		CreateMap<Chat, UpdateChatDTO>().ReverseMap();
 
-		CreateMap<CustomerRegistration, CustomerRegistrationDTO>().ReverseMap();
-		CreateMap<CustomerRegistration, CreateCustomerRegistrationDTO>().ReverseMap();
-		CreateMap<CustomerRegistration, UpdateCustomerRegistrationDTO>().ReverseMap();
+		CreateMap<Payment, PaymentDTO>().ReverseMap();
+		CreateMap<Payment, CreatePaymentDTO>().ReverseMap();
+		CreateMap<Payment, UpdatePaymentDTO>().ReverseMap();
 
-		CreateMap<Setting, SettingDTO>().ReverseMap();
-		CreateMap<Setting, CreateSettingDTO>().ReverseMap();
-		CreateMap<Setting, UpdateSettingDTO>().ReverseMap();
+		CreateMap<ProviderProfile, ProviderProfileDTO>().ReverseMap();
+		CreateMap<ProviderProfile, CreateProviderProfileDTO>().ReverseMap();
+		CreateMap<ProviderProfile, UpdateProviderProfileDTO>().ReverseMap();
 
-		CreateMap<CoachProfile, CoachProfileDTO>().ReverseMap();
-        CreateMap<CoachProfile, CreateCoachProfileDTO>().ReverseMap();
-        CreateMap<CoachProfile, UpdateCoachProfileDTO>().ReverseMap();
-        CreateMap<RegisterDTO, CoachProfile>().ReverseMap();
-        CreateMap<CreateCoachProfileRequestDTO, CoachProfile>().ReverseMap();
-        CreateMap<UpdateCoachProfileRequestDTO, CoachProfile>().ReverseMap();
+		CreateMap<Review, ReviewDTO>().ReverseMap();
+		CreateMap<Review, CreateReviewDTO>().ReverseMap();
+		CreateMap<Review, UpdateReviewDTO>().ReverseMap();
 
-        CreateMap<Feedback, FeedbackDTO>().ReverseMap();
-        CreateMap<Feedback, CreateFeedbackDTO>().ReverseMap();
-        CreateMap<Feedback, UpdateFeedbackDTO>().ReverseMap();
+		CreateMap<ServiceCategory, ServiceCategoryDTO>().ReverseMap();
+		CreateMap<ServiceCategory, CreateServiceCategoryDTO>().ReverseMap();
+		CreateMap<ServiceCategory, UpdateServiceCategoryDTO>().ReverseMap();
 
-		CreateMap<Client, ClientDTO>().ReverseMap();
-		CreateMap<Client, CreateClientDTO>().ReverseMap();
-		CreateMap<Client, UpdateClientDTO>().ReverseMap();
+		CreateMap<Service, ServiceDTO>().ReverseMap();
+		CreateMap<Service, CreateServiceDTO>().ReverseMap();
+		CreateMap<Service, UpdateServiceDTO>().ReverseMap();
 
-		CreateMap<ClientCalendar, ClientCalendarDTO>().ReverseMap();
-		CreateMap<ClientCalendar, CreateClientCalendarDTO>().ReverseMap();
-		CreateMap<ClientCalendar, UpdateClientCalendarDTO>().ReverseMap();
+		CreateMap<Transaction, TransactionDTO>().ReverseMap();
+		CreateMap<Transaction, CreateTransactionDTO>().ReverseMap();
+		CreateMap<Transaction, UpdateTransactionDTO>().ReverseMap();
 
-		CreateMap<ClientProgress, ClientProgressDTO>().ReverseMap();
-		CreateMap<ClientProgress, CreateClientProgressDTO>().ReverseMap();
-		CreateMap<ClientProgress, UpdateClientProgressDTO>().ReverseMap();
+		CreateMap<User, UserDTO>().ReverseMap();
+		CreateMap<User, CreateUserDTO>().ReverseMap();
+		CreateMap<User, UpdateUserDTO>().ReverseMap();
 
-		CreateMap<Note, NoteDTO>().ReverseMap();
-		CreateMap<Note, CreateNoteDTO>().ReverseMap();
-		CreateMap<Note, UpdateNoteDTO>().ReverseMap();
+		CreateMap<Wallet, WalletDTO>().ReverseMap();
+		CreateMap<Wallet, CreateWalletDTO>().ReverseMap();
+		CreateMap<Wallet, UpdateWalletDTO>().ReverseMap();
 
-		CreateMap<WhoAmIImage, WhoAmIImageDTO>().ReverseMap();
-		CreateMap<WhoAmIImage, CreateWhoAmIImageDTO>().ReverseMap();
-		CreateMap<WhoAmIImage, UpdateWhoAmIImageDTO>().ReverseMap();
+		////CreateMap<Plan, PlanDTO>().ReverseMap();
+		//CreateMap<Plan, PlanDTO>()
+  //    .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src =>
+  //          src.ExercisePlans != null ? src.ExercisePlans.Select(ep => ep.Exercise) : null ))
+  //    .ReverseMap()
+  //    .ForMember(dest => dest.ExercisePlans, opt => opt.MapFrom(src =>
+  //          new List<ExercisePlan>() ));
+		//CreateMap<Plan, CreatePlanDTO>().ReverseMap();
+		//CreateMap<Plan, UpdatePlanDTO>().ReverseMap();
 
-        CreateMap<CoachTime, CoachTimeDTO>().ReverseMap();
-		CreateMap<CoachTime, CreateCoachTimeDTO>().ReverseMap();
-		CreateMap<CoachTime, UpdateCoachTimeDTO>().ReverseMap();
-
-		CreateMap<Admin, AdminDTO>();
-
-    CreateMap<Exercise, ExerciseDTO>().ReverseMap();
-		CreateMap<Exercise, CreateExerciseDTO>().ReverseMap();
-		CreateMap<Exercise, UpdateExerciseDTO>().ReverseMap();
-
-    CreateMap<ExerciseHistory, ExerciseHistoryDTO>().ReverseMap();
-		CreateMap<ExerciseHistory, CreateExerciseHistoryDTO>().ReverseMap();
-		CreateMap<ExerciseHistory, UpdateExerciseHistoryDTO>().ReverseMap();
-
-    //CreateMap<Plan, PlanDTO>().ReverseMap();
-    CreateMap<Plan, PlanDTO>()
-      .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src =>
-            src.ExercisePlans != null ? src.ExercisePlans.Select(ep => ep.Exercise) : null ))
-      .ReverseMap()
-      .ForMember(dest => dest.ExercisePlans, opt => opt.MapFrom(src =>
-            new List<ExercisePlan>() ));
-		CreateMap<Plan, CreatePlanDTO>().ReverseMap();
-		CreateMap<Plan, UpdatePlanDTO>().ReverseMap();
-
-    CreateMap<Report, ReviewDTO>().ReverseMap();
-		CreateMap<Report, CreateReportDTO>().ReverseMap();
-		CreateMap<Report, UpdateReportDTO>().ReverseMap();
+  //  CreateMap<Report, ReviewDTO>().ReverseMap();
+		//CreateMap<Report, CreateReportDTO>().ReverseMap();
+		//CreateMap<Report, UpdateReportDTO>().ReverseMap();
 
 
 	}
