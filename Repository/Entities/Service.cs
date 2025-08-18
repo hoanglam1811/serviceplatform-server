@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Entities
 {
-	public class Service
+	public class Services
 	{
 		public Guid Id { get; set; }
 		public string? Name { get; set; }
