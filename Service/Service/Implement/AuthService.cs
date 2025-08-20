@@ -9,15 +9,10 @@ namespace Service.Service.Implement;
 public class AuthService
 {
     private readonly IGenericRepository<User> _userRepository;
-    //private readonly IGenericRepository<Admin> _adminRepository;
-    //private readonly IGenericRepository<Client> _clientRepository;
     private readonly IMapper _mapper;
 	private readonly EmailService _emailService;
 
 	public AuthService(
-        //IGenericRepository<CoachProfile> coachRepository,
-        //IGenericRepository<Admin> adminRepository,
-        //IGenericRepository<Client> clientRepository,
         IMapper mapper,
 		EmailService emailService)
     {
@@ -46,14 +41,16 @@ public class AuthService
 		return provider;
 	}
 
-	//public async Task<Admin?> LoginAdminAsync(LoginDTO dto)
-	//{
-	//    var admins = await _adminRepository.GetAllAsync();
-	//    var admin = admins.FirstOrDefault(x => x.Email == dto.Email);
-	//    if(admin == null || PasswordManager.VerifyPassword(dto.Password, admin.Password) == false) 
-	//        throw new Exception("Invalid email or password");
-	//    return admin;
-	//}
+	public async Task<User?> LoginAdminAsync(LoginDTO dto)
+	{
+		var admins = await _userRepository.GetAllAsync();
+		var admin = admins.FirstOrDefault(x => x.Username == dto.Username && x.Role == "Admin");
+
+		if (admin == null || PasswordManager.VerifyPassword(dto.Password, admin.PasswordHashed) == false)
+			throw new Exception("Invalid email or password");
+
+		return admin;
+	}
 
 	public async Task<User?> RegisterCustomerAsync(RegisterDTO dto)
 	{
@@ -91,20 +88,25 @@ public class AuthService
 		return await _userRepository.AddAsync(newProvider);
 	}
 
-	public async Task<List<User>> GetAllCustomersAsync()
+	public async Task<List<UserDTO>> GetAllCustomersAsync()
 	{
 		var customers = await _userRepository.GetAllAsync();
-		return customers
+		var customerEntities = customers
 			.Where(u => u.Role == "Customer")
 			.ToList();
+
+		// map sang DTO
+		return _mapper.Map<List<UserDTO>>(customerEntities);
 	}
 
-	public async Task<List<User>> GetAllServiceProvidersAsync()
+	public async Task<List<UserDTO>> GetAllServiceProvidersAsync()
 	{
 		var providers = await _userRepository.GetAllAsync();
-		return providers
+		var providerEntities = providers
 			.Where(u => u.Role == "ServiceProvider")
 			.ToList();
+
+		return _mapper.Map<List<UserDTO>>(providerEntities);
 	}
 
 	//public async Task SendResetPasswordOTPAsync(string email)

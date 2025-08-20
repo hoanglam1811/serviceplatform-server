@@ -22,7 +22,7 @@ namespace Service.Service.Implement
 		public async Task<IEnumerable<BookingDTO>> GetBookingsByUserIdAsync(Guid userId)
 		{
 			var bookings = await _genericRepository.GetAllAsync(
-				q => q.Include(b => b.Service)
+				q => q.Include(b => b.ServiceId)
 			);
 
 			bookings = bookings.Where(b => b.UserId == userId).ToList();

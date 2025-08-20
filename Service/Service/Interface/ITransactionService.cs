@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Service.Service.Interface
 {
 	public interface ITransactionService
-		: IGenericService<Transaction, TransactionDTO, CreateTransactionDTO, UpdateTransactionDTO>
+		: IGenericService<Transaction, CreateTransactionDTO, UpdateTransactionDTO, TransactionDTO>
 	{
 		Task<IEnumerable<TransactionDTO>> GetTransactionsByWalletIdAsync(Guid walletId);
 	}

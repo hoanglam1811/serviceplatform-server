@@ -15,13 +15,13 @@ using Service;
 using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddControllers();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Service Solution API", Version = "v1" });
+	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Service Solution API", Version = "V1" });
 
 	// Add JWT Bearer scheme
 	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -105,12 +105,18 @@ builder.Services.AddCors(options =>
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<,,,>), typeof(GenericService<,,,>));
-//builder.Services.AddScoped<IClientService, ClientService>();
-//builder.Services.AddScoped<IPageService, PageService>();
-//builder.Services.AddScoped<ICoachProfileService, CoachProfileService>();
-//builder.Services.AddScoped<ICoachingPackageService, CoachingPackageService>();
-//builder.Services.AddScoped<INoteService, NoteService>();
-//builder.Services.AddScoped<IClientCalendarService, ClientCalendarService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IWalletService, WalletService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IProviderProfileService, ProviderProfileService>();
+builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmailService>();
@@ -159,13 +165,12 @@ app.MapGet("/weatherforecast", () =>
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-	options.SwaggerEndpoint("/swagger/v1/swagger.json", "Coaching API V1");
+	options.SwaggerEndpoint("/swagger/v1/swagger.json", "Service Solution API V1");
 	//options.RoutePrefix = "swagger"; 
 	options.ConfigObject.DeepLinking = true;
 });
 
 app.UseCors("AllowFrontend");
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 }
@@ -175,13 +180,4 @@ app.UseMiddleware<JwtCookieMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
-
-
-app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

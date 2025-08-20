@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Service.Service.Implement
 {
 	public class TransactionService
-		: GenericService<Transaction, TransactionDTO, CreateTransactionDTO, UpdateTransactionDTO>, ITransactionService
+		: GenericService<Transaction, CreateTransactionDTO, UpdateTransactionDTO, TransactionDTO>, ITransactionService
 	{
 		public TransactionService(IGenericRepository<Transaction> genericRepository, IMapper mapper)
 			: base(genericRepository, mapper)

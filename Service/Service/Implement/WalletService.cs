@@ -12,7 +12,7 @@ using Service.Service.Interface;
 namespace Service.Service.Implement
 {
 	public class WalletService
-		: GenericService<Wallet, WalletDTO, CreateWalletDTO, UpdateWalletDTO>, IWalletService
+		: GenericService<Wallet, CreateWalletDTO, UpdateWalletDTO, WalletDTO>, IWalletService
 	{
 		public WalletService(IGenericRepository<Wallet> genericRepository, IMapper mapper)
 			: base(genericRepository, mapper)

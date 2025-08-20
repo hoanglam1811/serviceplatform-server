@@ -10,6 +10,7 @@ namespace Service.Service.Interface
 {
 	public interface IBookingService : IGenericService<Booking, CreateBookingDTO, UpdateBookingDTO, BookingDTO>
 	{
+
 		Task<IEnumerable<BookingDTO>> GetBookingsByUserIdAsync(Guid userId);
 		Task<IEnumerable<BookingDTO>> GetBookingsByServiceIdAsync(Guid serviceId);
 		Task<bool> UpdateBookingStatusAsync(Guid bookingId, string status);

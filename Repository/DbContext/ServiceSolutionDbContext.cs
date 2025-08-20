@@ -23,7 +23,7 @@ public class ServiceSolutionDbContext : DbContext
 	public virtual DbSet<Payment> Payments { get; set; }
 	public virtual DbSet<ProviderProfile> ProviderProfiles { get; set; }
 	public virtual DbSet<Review> Reviews { get; set; }
-	public virtual DbSet<Service> Services { get; set; }
+	public virtual DbSet<Services> Services { get; set; }
 	public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
 	public virtual DbSet<Transaction> Transactions { get; set; }
 	public virtual DbSet<User> Users { get; set; }

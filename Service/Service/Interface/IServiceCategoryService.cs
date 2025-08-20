@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Service.Service.Interface
 {
 	public interface IServiceCategoryService
-		: IGenericService<ServiceCategory, ServiceCategoryDTO, CreateServiceCategoryDTO, UpdateServiceCategoryDTO>
+		: IGenericService<ServiceCategory, CreateServiceCategoryDTO, UpdateServiceCategoryDTO, ServiceCategoryDTO>
 	{
 		Task<ServiceCategoryDTO?> GetByNameAsync(string name);
 	}

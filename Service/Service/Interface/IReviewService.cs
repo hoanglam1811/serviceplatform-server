@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Service.Interface
 {
-	public interface IReviewService
-	   : IGenericService<Review, CreateReviewDTO, UpdateReviewDTO, ReviewDTO>
+	public interface IReviewService: IGenericService<Review, CreateReviewDTO, UpdateReviewDTO, ReviewDTO>
 	{
 		Task<IEnumerable<ReviewDTO>> GetByBookingIdAsync(Guid bookingId);
 	}

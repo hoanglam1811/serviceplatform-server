@@ -12,7 +12,7 @@ using Service.Service.Interface;
 namespace Service.Service.Implement
 {
 	public class ServiceCategoryService
-		: GenericService<ServiceCategory, ServiceCategoryDTO, CreateServiceCategoryDTO, UpdateServiceCategoryDTO>, IServiceCategoryService
+		: GenericService<ServiceCategory, CreateServiceCategoryDTO, UpdateServiceCategoryDTO, ServiceCategoryDTO>, IServiceCategoryService
 	{
 		public ServiceCategoryService(IGenericRepository<ServiceCategory> genericRepository, IMapper mapper)
 			: base(genericRepository, mapper)

@@ -20,6 +20,6 @@ namespace Repository.Entities
 		public Guid UserId { get; set; }
 		public User User { get; set; }
 		public Guid ServiceId { get; set; }
-		public Service Service { get; set; }
+		public Services Service { get; set; }
 	}
 }

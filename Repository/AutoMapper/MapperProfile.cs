@@ -43,9 +43,9 @@ public class MapperProfile : Profile
 		CreateMap<ServiceCategory, CreateServiceCategoryDTO>().ReverseMap();
 		CreateMap<ServiceCategory, UpdateServiceCategoryDTO>().ReverseMap();
 
-		CreateMap<Service, ServiceDTO>().ReverseMap();
-		CreateMap<Service, CreateServiceDTO>().ReverseMap();
-		CreateMap<Service, UpdateServiceDTO>().ReverseMap();
+		CreateMap<Services, ServiceDTO>().ReverseMap();
+		CreateMap<Services, CreateServiceDTO>().ReverseMap();
+		CreateMap<Services, UpdateServiceDTO>().ReverseMap();
 
 		CreateMap<Transaction, TransactionDTO>().ReverseMap();
 		CreateMap<Transaction, CreateTransactionDTO>().ReverseMap();
