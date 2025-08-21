@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Repository.DTO;
 using Repository.Entities;
 using Repository.Repository.Interface;
@@ -6,17 +7,47 @@ using Service.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Service.Service.Implement
 {
-	public class PaymentService
-		: GenericService<Payment, PaymentDTO, CreatePaymentDTO, UpdatePaymentDTO>, IPaymentService
+	public class PaymentService : GenericService<Payment, CreatePaymentDTO, UpdatePaymentDTO, PaymentDTO>, IPaymentService
 	{
-		public PaymentService(IGenericRepository<Payment> genericRepository, IMapper mapper)
-			: base(genericRepository, mapper)
+		private readonly IPayOSService _payOSService;
+		private readonly IMapper _mapper;
+
+		public PaymentService(IPayOSService payOSService, IGenericRepository<Payment> genericRepository, IMapper mapper) : base(genericRepository, mapper) 
 		{
+			_payOSService = payOSService;
+			_mapper = mapper;
+		}
+
+		public async Task<PaymentDTO> CreatePayOSPaymentLinkAsync(CreatePaymentDTO dto)
+		{
+			var payment = await AddAsync(dto);
+
+			var payOsRequest = new PayOSPaymentRequestDTO
+			{
+				Amount = dto.Amount,
+				OrderCode = payment.Id.ToString(),
+				ReturnUrl = "https://your-website.com/payment/success",
+				CancelUrl = "https://your-website.com/payment/cancel",
+				Description = $"Thanh toán booking {dto.BookingId}"
+			};
+
+			var response = await _payOSService.CreatePaymentAsync(payOsRequest);
+
+			payment.PaymentUrl = response.PaymentUrl;
+
+			var entity = await _genericRepository.GetByIdAsync(payment.Id);
+			entity.PaymentUrl = payment.PaymentUrl;
+			await _genericRepository.UpdateAsync(entity);
+
+			return _mapper.Map<PaymentDTO>(entity);
+
 		}
 
 		public async Task<IEnumerable<PaymentDTO>> GetPaymentsByBookingIdAsync(Guid bookingId)

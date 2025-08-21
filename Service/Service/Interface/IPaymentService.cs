@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Service.Service.Interface
 {
-	public interface IPaymentService: IGenericService<Payment, PaymentDTO, CreatePaymentDTO, UpdatePaymentDTO>
+	public interface IPaymentService: IGenericService<Payment, CreatePaymentDTO, UpdatePaymentDTO, PaymentDTO>
 	{
+		Task<PaymentDTO> CreatePayOSPaymentLinkAsync(CreatePaymentDTO dto);
 		Task<IEnumerable<PaymentDTO>> GetPaymentsByBookingIdAsync(Guid bookingId);
 		Task<PaymentDTO?> UpdateStatusAsync(Guid id, string status);
+
 	}
 }

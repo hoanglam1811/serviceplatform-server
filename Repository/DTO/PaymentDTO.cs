@@ -12,6 +12,7 @@ namespace Repository.DTO
 		public Guid BookingId { get; set; }
 		public decimal? Amount { get; set; }
 		public string? Method { get; set; }
+		public string? PaymentUrl { get; set; }
 		public string? Status { get; set; }
 		public DateTime? TransactionDate { get; set; }
 		public DateTime? CreatedAt { get; set; }
@@ -21,9 +22,10 @@ namespace Repository.DTO
 	public class CreatePaymentDTO
 	{
 		public Guid BookingId { get; set; }
-		public decimal? Amount { get; set; }
+		public decimal Amount { get; set; }
 		public string? Method { get; set; }
 		public string? Status { get; set; }
+		public string? PaymentUrl { get; set; }
 		public DateTime? TransactionDate { get; set; }
 	}
 
@@ -34,6 +36,7 @@ namespace Repository.DTO
 		public decimal? Amount { get; set; }
 		public string? Method { get; set; }
 		public string? Status { get; set; }
+		public string? PaymentUrl { get; set; }
 		public DateTime? TransactionDate { get; set; }
 	}
 }

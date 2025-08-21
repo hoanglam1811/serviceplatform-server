@@ -1,5 +1,7 @@
 ﻿using API.DTO;
+using API.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Repository.DTO;
 using Service.Service.Interface;
 
@@ -10,10 +12,24 @@ namespace API.Controller
 	public class NotificationController : ControllerBase
 	{
 		private readonly INotificationService _notificationService;
+		private readonly IHubContext<NotificationHub> _hubContext;
 
-		public NotificationController(INotificationService notificationService)
+		public NotificationController(INotificationService notificationService, IHubContext<NotificationHub> hubContext )
 		{
 			_notificationService = notificationService;
+			_hubContext = hubContext;
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Create([FromBody] CreateNotificationDTO dto)
+		{
+			var notification = await _notificationService.AddAsync(dto);
+
+			// push tới user qua SignalR
+			await _hubContext.Clients.User(dto.UserId.ToString())
+				.SendAsync("ReceiveNotification", notification);
+
+			return Ok(ApiResponse<NotificationDTO>.SuccessResponse(notification, "Notification created & pushed successfully"));
 		}
 
 		[HttpGet("user/{userId}")]

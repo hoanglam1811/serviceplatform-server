@@ -1,5 +1,7 @@
 ﻿using API.DTO;
+using API.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Repository.DTO;
 using Service.Service.Interface;
 
@@ -10,25 +12,23 @@ namespace API.Controller
 	public class ChatController : ControllerBase
 	{
 		private readonly IChatService _chatService;
+		private readonly IHubContext<ChatHub> _hubContext;
 
-		public ChatController(IChatService chatService)
+		public ChatController(IChatService chatService, IHubContext<ChatHub> hubContext)
 		{
 			_chatService = chatService;
+			_hubContext = hubContext;
 		}
 
-		// CREATE
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] CreateChatDTO dto)
 		{
-			try
-			{
-				var chat = await _chatService.AddAsync(dto);
-				return Ok(ApiResponse<ChatDTO>.SuccessResponse(chat, "Message sent successfully"));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, ApiResponse<string>.Failure(ex.Message));
-			}
+			var chat = await _chatService.AddAsync(dto);
+
+			await _hubContext.Clients.User(dto.ReceiverId.ToString())
+				.SendAsync("ReceiveMessage", dto.SenderId, dto.Message);
+
+			return Ok(chat);
 		}
 
 		// GET ALL

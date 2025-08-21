@@ -13,12 +13,15 @@ using Service.Service.Interface;
 using Repository.AutoMapper;
 using Service;
 using API.Middleware;
+using API.Hubs;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
 	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Service Solution API", Version = "V1" });
@@ -83,7 +86,35 @@ builder.Services.AddAuthentication(options =>
 		ValidIssuer = jwtIssuer,
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey ?? ""))
 	};
+
+	options.Events = new JwtBearerEvents
+	{
+		OnMessageReceived = context =>
+		{
+			var accessToken = context.Request.Query["access_token"];
+			var path = context.HttpContext.Request.Path;
+			if (!string.IsNullOrEmpty(accessToken) &&
+				path.StartsWithSegments("/chathub"))
+			{
+				context.Token = accessToken;
+			}
+			return Task.CompletedTask;
+		},
+		OnTokenValidated = context =>
+		{
+			var userId = context.Principal?.FindFirst("id")?.Value;
+			if (!string.IsNullOrEmpty(userId))
+			{
+				context.Principal.AddIdentity(new ClaimsIdentity(new[]
+				{
+					new Claim(ClaimTypes.NameIdentifier, userId)
+				}));
+			}
+			return Task.CompletedTask;
+		}
+	};
 });
+
 
 builder.Services.AddAuthorization();
 
@@ -92,13 +123,16 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowFrontend", policy =>
 	{
-		policy.AllowAnyOrigin()
+		//policy.AllowAnyOrigin()
+		policy.WithOrigins("http://localhost:3000")
 			  //.AllowCredentials()
 			  .AllowAnyHeader()
-			  .AllowAnyMethod();
+			  .AllowAnyMethod()
+			  .AllowCredentials();
 	});
 });
 
+builder.Services.AddSignalR();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -117,6 +151,7 @@ builder.Services.AddScoped<IProviderProfileService, ProviderProfileService>();
 builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddHttpClient<IPayOSService, PayOSService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmailService>();
@@ -148,20 +183,6 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -180,4 +201,6 @@ app.UseMiddleware<JwtCookieMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
+app.MapHub<NotificationHub>("/notificationHub");
 app.Run();

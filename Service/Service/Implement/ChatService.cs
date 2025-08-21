@@ -19,9 +19,6 @@ namespace Service.Service.Implement
 		{
 		}
 
-		/// <summary>
-		/// Lấy toàn bộ tin nhắn giữa 2 user (theo thứ tự thời gian)
-		/// </summary>
 		public async Task<IEnumerable<ChatDTO>> GetConversationAsync(Guid user1, Guid user2)
 		{
 			var chats = await _genericRepository.GetAllAsync(
@@ -34,9 +31,6 @@ namespace Service.Service.Implement
 			return _mapper.Map<IEnumerable<ChatDTO>>(chats);
 		}
 
-		/// <summary>
-		/// Đánh dấu tất cả tin nhắn từ user gửi đến mình thành "Đã đọc"
-		/// </summary>
 		public async Task MarkAsReadAsync(Guid senderId, Guid receiverId)
 		{
 			var unreadChats = await _genericRepository.GetAllAsync(

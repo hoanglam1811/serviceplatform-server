@@ -15,6 +15,7 @@ namespace Repository.Entities
 		public DateTime? TransactionDate { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
+		public string? PaymentUrl { get; set; }
 
 		public Guid BookingId { get; set; }
 		public Booking Booking { get; set; }

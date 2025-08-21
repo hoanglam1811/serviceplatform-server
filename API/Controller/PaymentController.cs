@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repository.DTO;
 using Service.Service.Interface;
+using API.DTO;
+using Service.Service.Implement;
 
 namespace API.Controller
 {
@@ -13,6 +15,22 @@ namespace API.Controller
 		public PaymentController(IPaymentService paymentService)
 		{
 			_paymentService = paymentService;
+		}
+
+		[HttpPost("create-payos-link")]
+		public async Task<IActionResult> CreatePayOSLink([FromBody] CreatePaymentDTO dto)
+		{
+			var payment = await _paymentService.CreatePayOSPaymentLinkAsync(dto);
+			return Ok(new { checkoutUrl = payment.PaymentUrl });
+		}
+
+		[HttpPost("webhook/payos")]
+		public async Task<IActionResult> PayOSWebhook([FromForm] PayOSWebhookDTO dto)
+		{
+			var updated = await _paymentService.UpdateStatusAsync(Guid.Parse(dto.orderCode), dto.status);
+			if (updated == null) return NotFound();
+
+			return Ok("OK");
 		}
 
 		[HttpGet]
