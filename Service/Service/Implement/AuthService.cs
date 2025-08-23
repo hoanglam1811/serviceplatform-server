@@ -8,17 +8,19 @@ namespace Service.Service.Implement;
 
 public class AuthService
 {
-    private readonly IGenericRepository<User> _userRepository;
-    private readonly IMapper _mapper;
-	private readonly EmailService _emailService;
-
-	public AuthService(
+  private readonly IGenericRepository<User> _userRepository;
+  private readonly IMapper _mapper;
+    private readonly EmailService _emailService;
+    
+    public AuthService(
+        IGenericRepository<User> userRepository,
         IMapper mapper,
-		EmailService emailService)
+        EmailService emailService)
     {
+        _userRepository = userRepository;
         _mapper = mapper;
-		_emailService = emailService;
-	}
+        _emailService = emailService;
+    }
 
     public async Task<User?> LoginCustomerAsync(LoginDTO dto)
     {
