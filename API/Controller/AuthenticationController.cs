@@ -3,6 +3,7 @@ using Repository.DTO;
 using API.DTO;
 using Service.Service.Implement;
 using Service.Service.Interface;
+using Repository.Entities;
 
 namespace API.Controller;
 [ApiController]
@@ -27,8 +28,19 @@ public class AuthenticationController : ControllerBase
     {
         try{
             var customer = await _authService.LoginCustomerAsync(dto);
-            string token = _jwtService.GenerateToken(customer, "Customer");
-            return Ok(ApiResponse<string>.SuccessResponse(token, "Customer logged in successfully"));
+            string token = _jwtService.GenerateToken(customer, customer.Role);
+            Response.Cookies.Append("auth_token", token, new CookieOptions
+            {
+                HttpOnly = true,
+                //Secure = true, // only over HTTPS
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(1)
+            });
+            return Ok(ApiResponse<object>.SuccessResponse(new { 
+              id = customer.Id,
+              name = customer.FullName,
+              role = customer.Role 
+            }, "Customer logged in successfully"));
         }
         catch (Exception ex)
         {
@@ -41,7 +53,7 @@ public class AuthenticationController : ControllerBase
     {
         try{
             var serviceProvider = await _authService.LoginServiceProviderAsync(dto);
-            string token = _jwtService.GenerateToken(serviceProvider, "ServiceProvider");
+            string token = _jwtService.GenerateToken(serviceProvider, "Provider");
             return Ok(ApiResponse<string>.SuccessResponse(token, "ServiceProvider logged in successfully"));
         }
         catch (Exception ex)
@@ -66,19 +78,41 @@ public class AuthenticationController : ControllerBase
 	}
 
 	[HttpPost("register-customer")]
-    public async Task<IActionResult> CustomerRegister([FromBody]RegisterDTO dto)
+    public async Task<IActionResult> CustomerRegister([FromForm]RegisterDTO dto)
     {
         var customer = await _authService.RegisterCustomerAsync(dto);
         string token = _jwtService.GenerateToken(customer, "Customer");
-        return Ok(ApiResponse<string>.SuccessResponse(token, "Customer registered successfully"));
+        Response.Cookies.Append("auth_token", token, new CookieOptions
+        {
+            HttpOnly = true,
+            //Secure = true, // only over HTTPS
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        });
+        return Ok(ApiResponse<object>.SuccessResponse(new { 
+          id = customer.Id,
+          name = customer.FullName,
+          role = customer.Role 
+        }, "Customer registered successfully"));
     }
 
 	[HttpPost("register-service-provider")]
-	public async Task<IActionResult> ServiceProviderRegister([FromBody] RegisterDTO dto)
+	public async Task<IActionResult> ServiceProviderRegister([FromForm] RegisterDTO dto)
 	{
-		var serviceProvider = await _authService.RegisterCustomerAsync(dto);
-		string token = _jwtService.GenerateToken(serviceProvider, "ServiceProvider");
-		return Ok(ApiResponse<string>.SuccessResponse(token, "Service Provider registered successfully"));
+		var serviceProvider = await _authService.RegisterServiceProviderAsync(dto);
+		string token = _jwtService.GenerateToken(serviceProvider, "Provider");
+    Response.Cookies.Append("auth_token", token, new CookieOptions
+        {
+            HttpOnly = true,
+            //Secure = true, // only over HTTPS
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        });
+        return Ok(ApiResponse<object>.SuccessResponse(new { 
+          id = serviceProvider.Id,
+          name = serviceProvider.FullName,
+          role = serviceProvider.Role 
+        }, "Service Provider registered successfully"));
 	}
 
 	[HttpGet("customers")]
@@ -108,6 +142,14 @@ public class AuthenticationController : ControllerBase
 			return StatusCode(500, ApiResponse<string>.Failure(ex.Message));
 		}
 	}
+
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+      Response.Cookies.Delete("auth_token");
+      return Ok();
+    }
 
 	//[HttpGet("admin")]
 	//public async Task<IActionResult> GetAdmin()

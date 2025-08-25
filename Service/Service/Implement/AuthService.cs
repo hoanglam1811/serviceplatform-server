@@ -8,22 +8,25 @@ namespace Service.Service.Implement;
 
 public class AuthService
 {
-    private readonly IGenericRepository<User> _userRepository;
-    private readonly IMapper _mapper;
-	private readonly EmailService _emailService;
-
-	public AuthService(
+  private readonly IGenericRepository<User> _userRepository;
+  private readonly IMapper _mapper;
+    private readonly EmailService _emailService;
+    
+    public AuthService(
+        IGenericRepository<User> userRepository,
         IMapper mapper,
-		EmailService emailService)
+        EmailService emailService)
     {
+        _userRepository = userRepository;
         _mapper = mapper;
-		_emailService = emailService;
-	}
+        _emailService = emailService;
+    }
 
     public async Task<User?> LoginCustomerAsync(LoginDTO dto)
     {
         var customers = await _userRepository.GetAllAsync();
-        var customer = customers.FirstOrDefault(x => x.Username == dto.Username && x.Role == "Customer");
+        var customer = customers.FirstOrDefault(x => x.Username == dto.Username );
+            //&& x.Role == "Customer");
         if(customer == null || PasswordManager.VerifyPassword(dto.Password, customer.PasswordHashed) == false) 
             throw new Exception("Invalid email or password");
 
@@ -33,7 +36,7 @@ public class AuthService
 	public async Task<User?> LoginServiceProviderAsync(LoginDTO dto)
 	{
 		var providers = await _userRepository.GetAllAsync();
-		var provider = providers.FirstOrDefault(x => x.Username == dto.Username && x.Role == "ServiceProvider");
+		var provider = providers.FirstOrDefault(x => x.Username == dto.Username && x.Role == "Provider");
 
 		if (provider == null || PasswordManager.VerifyPassword(dto.Password, provider.PasswordHashed) == false)
 			throw new Exception("Invalid email or password");
@@ -74,17 +77,17 @@ public class AuthService
 	public async Task<User?> RegisterServiceProviderAsync(RegisterDTO dto)
 	{
 		var emailExists = await _userRepository.GetFirstOrDefaultAsync(
-			x => x.Email == dto.Email && x.Role == "ServiceProvider");
+			x => x.Email == dto.Email && x.Role == "Provider");
 		if (emailExists != null)
 			throw new Exception("Email already exists");
 		var usernameExists = await _userRepository.GetFirstOrDefaultAsync(
-			x => x.Username == dto.Username && x.Role == "ServiceProvider");
+			x => x.Username == dto.Username && x.Role == "Provider");
 		if (usernameExists != null)
 			throw new Exception("Username already exists");
 		var newProvider = _mapper.Map<User>(dto);
 		newProvider.PasswordHashed = PasswordManager.HashPassword(dto.Password);
 		newProvider.Status = "Unverified";
-		newProvider.Role = "ServiceProvider";
+		newProvider.Role = "Provider";
 		return await _userRepository.AddAsync(newProvider);
 	}
 
