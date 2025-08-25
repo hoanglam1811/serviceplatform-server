@@ -54,6 +54,7 @@ public class MapperProfile : Profile
 		CreateMap<User, UserDTO>().ReverseMap();
 		CreateMap<User, CreateUserDTO>().ReverseMap();
 		CreateMap<User, UpdateUserDTO>().ReverseMap();
+		CreateMap<User, RegisterDTO>().ReverseMap();
 
 		CreateMap<Wallet, WalletDTO>().ReverseMap();
 		CreateMap<Wallet, CreateWalletDTO>().ReverseMap();

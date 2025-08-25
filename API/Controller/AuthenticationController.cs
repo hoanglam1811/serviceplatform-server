@@ -28,7 +28,7 @@ public class AuthenticationController : ControllerBase
     {
         try{
             var customer = await _authService.LoginCustomerAsync(dto);
-            string token = _jwtService.GenerateToken(customer, "Customer");
+            string token = _jwtService.GenerateToken(customer, customer.Role);
             Response.Cookies.Append("auth_token", token, new CookieOptions
             {
                 HttpOnly = true,
@@ -53,7 +53,7 @@ public class AuthenticationController : ControllerBase
     {
         try{
             var serviceProvider = await _authService.LoginServiceProviderAsync(dto);
-            string token = _jwtService.GenerateToken(serviceProvider, "ServiceProvider");
+            string token = _jwtService.GenerateToken(serviceProvider, "Provider");
             return Ok(ApiResponse<string>.SuccessResponse(token, "ServiceProvider logged in successfully"));
         }
         catch (Exception ex)
@@ -97,11 +97,22 @@ public class AuthenticationController : ControllerBase
     }
 
 	[HttpPost("register-service-provider")]
-	public async Task<IActionResult> ServiceProviderRegister([FromBody] RegisterDTO dto)
+	public async Task<IActionResult> ServiceProviderRegister([FromForm] RegisterDTO dto)
 	{
-		var serviceProvider = await _authService.RegisterCustomerAsync(dto);
-		string token = _jwtService.GenerateToken(serviceProvider, "ServiceProvider");
-		return Ok(ApiResponse<string>.SuccessResponse(token, "Service Provider registered successfully"));
+		var serviceProvider = await _authService.RegisterServiceProviderAsync(dto);
+		string token = _jwtService.GenerateToken(serviceProvider, "Provider");
+    Response.Cookies.Append("auth_token", token, new CookieOptions
+        {
+            HttpOnly = true,
+            //Secure = true, // only over HTTPS
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        });
+        return Ok(ApiResponse<object>.SuccessResponse(new { 
+          id = serviceProvider.Id,
+          name = serviceProvider.FullName,
+          role = serviceProvider.Role 
+        }, "Service Provider registered successfully"));
 	}
 
 	[HttpGet("customers")]

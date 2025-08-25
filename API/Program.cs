@@ -98,6 +98,11 @@ builder.Services.AddAuthentication(options =>
 			{
 				context.Token = accessToken;
 			}
+      var token = context.HttpContext.Request.Cookies["auth_token"];
+      if (!string.IsNullOrEmpty(token))
+      {
+        context.Token = token;
+      }
 			return Task.CompletedTask;
 		},
 		OnTokenValidated = context =>
@@ -177,11 +182,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>
