@@ -112,6 +112,68 @@ public class AuthService
 		return _mapper.Map<List<UserDTO>>(providerEntities);
 	}
 
+	public async Task<UserDTO> UpdateUserStatusAsync(Guid userId, string newStatus)
+	{
+		var user = await _userRepository.GetByIdAsync(userId);
+		if (user == null)
+			throw new Exception("User not found");
+
+		user.Status = newStatus;
+		await _userRepository.UpdateAsync(user);
+
+		// Gửi email notify
+		string htmlContent = $@"
+<p>Xin chào <strong>{user.FullName}</strong>,</p>
+<p>Tài khoản ServiceHub của bạn đã được <strong>{newStatus}</strong>.</p>
+<p>Bạn có thể đăng nhập và bắt đầu sử dụng dịch vụ ngay.</p>
+<p style='margin-top: 16px;'>Chúc bạn một ngày làm việc hiệu quả 🌟</p>
+<hr style='margin: 20px 0;' />
+<p style='font-size: 13px; color: #888;'>Nếu bạn không thực hiện việc này, vui lòng liên hệ hỗ trợ ngay.</p>
+<p style='font-size: 13px; color: #888;'>Trân trọng,<br />Đội ngũ ServiceHub</p>";
+
+		await _emailService.SendEmailAsync(new SendEmailRequest
+		{
+			ToEmail = user.Email,
+			Subject = $"🔔 Tài khoản ServiceHub đã được {newStatus}",
+			UserName = user.FullName,
+			Content = htmlContent
+		});
+
+		return _mapper.Map<UserDTO>(user);
+	}
+
+	public async Task<UserDTO> RejectUserAsync(Guid userId, string reason)
+	{
+		var user = await _userRepository.GetByIdAsync(userId);
+		if (user == null)
+			throw new Exception("User not found");
+
+		user.Status = "Rejected";
+		await _userRepository.UpdateAsync(user);
+
+		// Gửi email notify
+		string htmlContent = $@"
+<p>Xin chào <strong>{user.FullName}</strong>,</p>
+<p>Tài khoản ServiceHub của bạn đã bị <strong>Từ chối</strong> sau quá trình xác minh.</p>
+<p><strong>Lý do:</strong> {reason}</p>
+<p style='margin-top: 16px;'>Vui lòng kiểm tra lại thông tin và đăng ký lại nếu cần.</p>
+<hr style='margin: 20px 0;' />
+<p style='font-size: 13px; color: #888;'>Nếu có thắc mắc, vui lòng liên hệ đội ngũ hỗ trợ ServiceHub.</p>
+<p style='font-size: 13px; color: #888;'>Trân trọng,<br />Đội ngũ ServiceHub</p>";
+
+		await _emailService.SendEmailAsync(new SendEmailRequest
+		{
+			ToEmail = user.Email,
+			Subject = "⚠️ Tài khoản ServiceHub bị từ chối",
+			UserName = user.FullName,
+			Content = htmlContent
+		});
+
+		return _mapper.Map<UserDTO>(user);
+	}
+
+
+
 	//public async Task SendResetPasswordOTPAsync(string email)
 	//{
 	//	await _emailService.SendOTPChangePasswordAsync(email);

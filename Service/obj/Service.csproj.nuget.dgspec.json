@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/trido/Downloads/service-be/Service/Service.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Service\\Service.csproj": {}
   },
   "projects": {
-    "/home/trido/Downloads/service-be/Repository/Repository.csproj": {
+    "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/trido/Downloads/service-be/Repository/Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "/home/trido/Downloads/service-be/Repository/Repository.csproj",
-        "packagesPath": "/home/trido/.nuget/packages/",
-        "outputPath": "/home/trido/Downloads/service-be/Repository/obj/",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/trido/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -88,34 +89,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/trido/.dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/trido/Downloads/service-be/Service/Service.csproj": {
+    "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/trido/Downloads/service-be/Service/Service.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "/home/trido/Downloads/service-be/Service/Service.csproj",
-        "packagesPath": "/home/trido/.nuget/packages/",
-        "outputPath": "/home/trido/Downloads/service-be/Service/obj/",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Service\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/trido/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/trido/Downloads/service-be/Repository/Repository.csproj": {
-                "projectPath": "/home/trido/Downloads/service-be/Repository/Repository.csproj"
+              "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\ServicePlatform\\serviceplatform-server\\Repository\\Repository.csproj"
               }
             }
           }
@@ -124,11 +131,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -168,7 +170,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/trido/.dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
