@@ -134,7 +134,7 @@ public class AuthenticationController : ControllerBase
 	{
 		try
 		{
-			var serviceProviders = await _authService.GetAllCustomersAsync();
+			var serviceProviders = await _authService.GetAllServiceProvidersAsync();
 			return Ok(ApiResponse<IEnumerable<UserDTO>>.SuccessResponse(serviceProviders, "Get all service-providers successfully"));
 		}
 		catch (Exception ex)
@@ -143,8 +143,35 @@ public class AuthenticationController : ControllerBase
 		}
 	}
 
+	[HttpPut("accept-user/{id}")]
+	public async Task<IActionResult> AcceptUser(Guid id, [FromQuery] string role)
+	{
+		try
+		{
+			var updatedUser = await _authService.UpdateUserStatusAsync(id, "Verified");
+			return Ok(ApiResponse<UserDTO>.SuccessResponse(updatedUser, $"{role} verified successfully"));
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(500, ApiResponse<string>.Failure(ex.Message));
+		}
+	}
 
-    [HttpPost("logout")]
+	[HttpPut("reject-user/{id}")]
+	public async Task<IActionResult> RejectUser(Guid id, [FromQuery] string role, [FromBody] string reason)
+	{
+		try
+		{
+			var updatedUser = await _authService.RejectUserAsync(id, reason);
+			return Ok(ApiResponse<UserDTO>.SuccessResponse(updatedUser, $"{role} rejected with reason: {reason}"));
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(500, ApiResponse<string>.Failure(ex.Message));
+		}
+	}
+
+	[HttpPost("logout")]
     public IActionResult Logout()
     {
       Response.Cookies.Delete("auth_token");
