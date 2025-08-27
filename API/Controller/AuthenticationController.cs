@@ -146,15 +146,15 @@ public class AuthenticationController : ControllerBase
 	[HttpPut("accept-user/{id}")]
 	public async Task<IActionResult> AcceptUser(Guid id, [FromQuery] string role)
 	{
-		try
-		{
+		/*try
+		{*/
 			var updatedUser = await _authService.UpdateUserStatusAsync(id, "Verified");
 			return Ok(ApiResponse<UserDTO>.SuccessResponse(updatedUser, $"{role} verified successfully"));
-		}
+		/*}
 		catch (Exception ex)
 		{
 			return StatusCode(500, ApiResponse<string>.Failure(ex.Message));
-		}
+		}*/
 	}
 
 	[HttpPut("reject-user/{id}")]
