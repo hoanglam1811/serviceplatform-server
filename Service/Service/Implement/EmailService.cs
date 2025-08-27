@@ -29,14 +29,14 @@ public class EmailService
         email.To.Add(MailboxAddress.Parse(request.ToEmail));
         email.Subject = request.Subject;
 
-        var body = new TextPart(MimeKit.Text.TextFormat.Html)
-        {
-            Text = GetTemplate()
-                .Replace("{{Content}}", request.Content)
-                .Replace("{{UserName}}", request.UserName)
-        };
+		var body = new TextPart(MimeKit.Text.TextFormat.Html)
+		{
+			Text = GetTemplate()
+		.Replace("{{Content}}", request.Content ?? string.Empty)
+		.Replace("{{UserName}}", request.UserName ?? string.Empty)
+		};
 
-        var multipart = new Multipart("mixed") { body };
+		var multipart = new Multipart("mixed") { body };
 
         var memoryStreams = new List<MemoryStream>();
 

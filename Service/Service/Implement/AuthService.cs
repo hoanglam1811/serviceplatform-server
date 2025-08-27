@@ -70,7 +70,7 @@ public class AuthService
 			throw new Exception("Username already exists");
 		var newCustomer = _mapper.Map<User>(dto);
 		newCustomer.PasswordHashed = PasswordManager.HashPassword(dto.Password);
-		newCustomer.Status = "Unverified";
+		newCustomer.Status = "Pending";
 		newCustomer.Role = "Customer";
 
     var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
@@ -92,7 +92,7 @@ public class AuthService
 			throw new Exception("Username already exists");
 		var newProvider = _mapper.Map<User>(dto);
 		newProvider.PasswordHashed = PasswordManager.HashPassword(dto.Password);
-		newProvider.Status = "Unverified";
+		newProvider.Status = "Pending";
 		newProvider.Role = "Provider";
 
     var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
@@ -133,13 +133,13 @@ public class AuthService
 
 		// Gửi email notify
 		string htmlContent = $@"
-<p>Xin chào <strong>{user.FullName}</strong>,</p>
-<p>Tài khoản ServiceHub của bạn đã được <strong>{newStatus}</strong>.</p>
-<p>Bạn có thể đăng nhập và bắt đầu sử dụng dịch vụ ngay.</p>
-<p style='margin-top: 16px;'>Chúc bạn một ngày làm việc hiệu quả 🌟</p>
-<hr style='margin: 20px 0;' />
-<p style='font-size: 13px; color: #888;'>Nếu bạn không thực hiện việc này, vui lòng liên hệ hỗ trợ ngay.</p>
-<p style='font-size: 13px; color: #888;'>Trân trọng,<br />Đội ngũ ServiceHub</p>";
+		<p>Xin chào <strong>{user.FullName}</strong>,</p>
+		<p>Tài khoản ServiceHub của bạn đã được <strong>{newStatus}</strong>.</p>
+		<p>Bạn có thể đăng nhập và bắt đầu sử dụng dịch vụ ngay.</p>
+		<p style='margin-top: 16px;'>Chúc bạn một ngày làm việc hiệu quả 🌟</p>
+		<hr style='margin: 20px 0;' />
+		<p style='font-size: 13px; color: #888;'>Nếu bạn không thực hiện việc này, vui lòng liên hệ hỗ trợ ngay.</p>
+		<p style='font-size: 13px; color: #888;'>Trân trọng,<br />Đội ngũ ServiceHub</p>";
 
 		await _emailService.SendEmailAsync(new SendEmailRequest
 		{
@@ -148,6 +148,12 @@ public class AuthService
 			UserName = user.FullName,
 			Content = htmlContent
 		});
+
+		if (string.IsNullOrWhiteSpace(user.Email))
+			throw new Exception("User email is empty, cannot send email");
+
+		if (string.IsNullOrWhiteSpace(htmlContent))
+			throw new Exception("Email content is empty, cannot send email");
 
 		return _mapper.Map<UserDTO>(user);
 	}

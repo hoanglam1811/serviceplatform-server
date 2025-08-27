@@ -12,7 +12,7 @@ using Service.Service.Interface;
 namespace Service.Service.Implement
 {
 	public class UserService
-		: GenericService<User, UserDTO, CreateUserDTO, UpdateUserDTO>, IUserService
+		: GenericService<User, CreateUserDTO, UpdateUserDTO, UserDTO>, IUserService
 	{
 		public UserService(IGenericRepository<User> genericRepository, IMapper mapper)
 			: base(genericRepository, mapper)

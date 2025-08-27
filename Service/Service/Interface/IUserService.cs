@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Service.Service.Interface
 {
 	public interface IUserService
-		: IGenericService<User, UserDTO, CreateUserDTO, UpdateUserDTO>
+		: IGenericService<User, CreateUserDTO, UpdateUserDTO, UserDTO>
 	{
 		Task<UserDTO?> GetByUsernameAsync(string username);
 	}
