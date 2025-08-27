@@ -9,17 +9,20 @@ namespace Service.Service.Implement;
 public class AuthService
 {
   private readonly IGenericRepository<User> _userRepository;
+  private readonly CloudinaryService _cloudinaryService;
   private readonly IMapper _mapper;
     private readonly EmailService _emailService;
     
     public AuthService(
         IGenericRepository<User> userRepository,
         IMapper mapper,
+        CloudinaryService cloudinaryService,
         EmailService emailService)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _emailService = emailService;
+        _cloudinaryService = cloudinaryService;
     }
 
     public async Task<User?> LoginCustomerAsync(LoginDTO dto)
@@ -70,6 +73,9 @@ public class AuthService
 		newCustomer.Status = "Unverified";
 		newCustomer.Role = "Customer";
 
+    var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
+    newCustomer.NationalId = string.Join(", ", images);
+
 		// 4. Lưu DB
 		return await _userRepository.AddAsync(newCustomer);
 	}
@@ -88,6 +94,10 @@ public class AuthService
 		newProvider.PasswordHashed = PasswordManager.HashPassword(dto.Password);
 		newProvider.Status = "Unverified";
 		newProvider.Role = "Provider";
+
+    var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
+    newProvider.NationalId = string.Join(", ", images);
+
 		return await _userRepository.AddAsync(newProvider);
 	}
 
@@ -106,7 +116,7 @@ public class AuthService
 	{
 		var providers = await _userRepository.GetAllAsync();
 		var providerEntities = providers
-			.Where(u => u.Role == "ServiceProvider")
+			.Where(u => u.Role == "Provider")
 			.ToList();
 
 		return _mapper.Map<List<UserDTO>>(providerEntities);

@@ -29,6 +29,31 @@ public class CloudinaryService
         return result.SecureUrl.ToString();
     }
 
+
+    public async Task<string[]> UploadImagesAsync(List<IFormFile> files)
+    {
+      var urls = new List<string>();
+
+      foreach (var file in files)
+      {
+        if (file.Length <= 0) continue;
+
+        await using var stream = file.OpenReadStream();
+        var uploadParams = new ImageUploadParams
+        {
+          File = new FileDescription(file.FileName, stream),
+        };
+        var result = await _cloudinary.UploadAsync(uploadParams);
+
+        if (result.SecureUrl != null)
+        {
+          urls.Add(result.SecureUrl.ToString());
+        }
+      }
+
+      return urls.ToArray();
+    }
+
     public async Task<string> DeleteImageAsync(string publicId)
     {
         var deletionParams = new DeletionParams(publicId);
