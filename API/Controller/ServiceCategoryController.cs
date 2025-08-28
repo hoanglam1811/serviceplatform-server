@@ -53,7 +53,7 @@ namespace API.Controller
 		[HttpPut("{id:guid}")]
 		public async Task<IActionResult> Update(Guid id, [FromBody] UpdateServiceCategoryDTO dto)
 		{
-			dto.CategoryId = id;
+			dto.Id = id;
 			var result = await _serviceCategoryService.UpdateAsync(dto);
 			return Ok(ApiResponse<ServiceCategoryDTO>.SuccessResponse(result, "Category updated successfully"));
 		}
