@@ -22,6 +22,8 @@ namespace Repository.DTO
 		public string? ImageUrl { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
+
+    public ServiceCategoryDTO? Category { get; set; }
 	}
 
 	// DTO khi tạo mới

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Repository.DTO;
 using Repository.Entities;
 using Repository.Repository.Interface;
@@ -21,7 +22,7 @@ namespace Service.Service.Implement
 
 		public async Task<IEnumerable<ServiceDTO>> GetServicesByUserIdAsync(Guid userId)
 		{
-			var services = await _genericRepository.GetAllAsync();
+			var services = await _genericRepository.GetAllAsync(q => q.Include(s => s.Category));
 			var result = services.Where(s => s.UserId == userId);
 			return _mapper.Map<IEnumerable<ServiceDTO>>(result);
 		}
