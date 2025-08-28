@@ -72,6 +72,8 @@ public class AuthService
 		newCustomer.PasswordHashed = PasswordManager.HashPassword(dto.Password);
 		newCustomer.Status = "Pending";
 		newCustomer.Role = "Customer";
+		newCustomer.CreatedAt = DateTime.Now;
+		newCustomer.UpdatedAt = DateTime.Now;
 
     var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
     newCustomer.NationalId = string.Join(", ", images);
@@ -94,6 +96,8 @@ public class AuthService
 		newProvider.PasswordHashed = PasswordManager.HashPassword(dto.Password);
 		newProvider.Status = "Pending";
 		newProvider.Role = "Provider";
+		newProvider.CreatedAt = DateTime.Now;
+		newProvider.UpdatedAt = DateTime.Now;	
 
     var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
     newProvider.NationalId = string.Join(", ", images);
