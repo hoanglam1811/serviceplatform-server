@@ -33,5 +33,15 @@ namespace Service.Service.Implement
 			var result = services.Where(s => s.CategoryId == categoryId);
 			return _mapper.Map<IEnumerable<ServiceDTO>>(result);
 		}
-	}
+
+    public async Task<ServiceDTO> UpdateNoForeignId(UpdateServiceDTO dto)
+    {
+      var service = await _genericRepository.GetByIdAsync(dto.Id);
+      var entity = _mapper.Map<Services>(dto);
+      entity.UserId = service.UserId;
+      entity.Status = "Active";
+      var result = await _genericRepository.UpdateAsync(entity);
+      return _mapper.Map<ServiceDTO>(result);
+    }
+  }
 }

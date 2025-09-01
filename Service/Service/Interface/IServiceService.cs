@@ -14,5 +14,6 @@ namespace Service.Service.Interface
 	{
 		Task<IEnumerable<ServiceDTO>> GetServicesByUserIdAsync(Guid userId);
 		Task<IEnumerable<ServiceDTO>> GetServicesByCategoryIdAsync(Guid categoryId);
+		Task<ServiceDTO> UpdateNoForeignId(UpdateServiceDTO dto);
 	}
 }

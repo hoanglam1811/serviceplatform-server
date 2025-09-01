@@ -8,7 +8,7 @@ namespace Repository.DTO
 {
 	public class ServiceCategoryDTO
 	{
-		public Guid? CategoryId { get; set; }
+		public Guid? Id { get; set; }
 		public string? Name { get; set; }
 		public string? Description { get; set; }
 		public string? Icon { get; set; }
@@ -27,7 +27,7 @@ namespace Repository.DTO
 	// DTO khi cập nhật
 	public class UpdateServiceCategoryDTO
 	{
-		public Guid CategoryId { get; set; }
+		public Guid Id { get; set; }
 		public string? Name { get; set; }
 		public string? Description { get; set; }
 		public string? Icon { get; set; }

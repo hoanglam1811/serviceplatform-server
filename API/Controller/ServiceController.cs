@@ -43,7 +43,7 @@ namespace API.Controller
 		public async Task<IActionResult> Update(Guid id, [FromBody] UpdateServiceDTO dto)
 		{
 			dto.Id = id;
-			var result = await _serviceService.UpdateAsync(dto);
+			var result = await _serviceService.UpdateNoForeignId(dto);
 			return Ok(ApiResponse<ServiceDTO>.SuccessResponse(result, "Service updated successfully"));
 		}
 
