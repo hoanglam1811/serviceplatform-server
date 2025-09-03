@@ -13,6 +13,7 @@ namespace Service.Service.Interface
 		: IGenericService<Services, CreateServiceDTO, UpdateServiceDTO, ServiceDTO>
 	{
 		Task<IEnumerable<ServiceDTO>> GetServicesByUserIdAsync(Guid userId);
+		Task<IEnumerable<ServiceDTO>> GetServicesWithCategory();
 		Task<IEnumerable<ServiceDTO>> GetServicesByCategoryIdAsync(Guid categoryId);
 		Task<ServiceDTO> UpdateNoForeignId(UpdateServiceDTO dto);
 	}

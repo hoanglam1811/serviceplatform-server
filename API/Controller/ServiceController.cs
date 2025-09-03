@@ -19,7 +19,7 @@ namespace API.Controller
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
-			var result = await _serviceService.GetAllAsync();
+			var result = await _serviceService.GetServicesWithCategory();
 			return Ok(ApiResponse<IEnumerable<ServiceDTO>>.SuccessResponse(result, "Fetched all services successfully"));
 		}
 

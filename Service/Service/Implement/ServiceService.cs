@@ -43,5 +43,11 @@ namespace Service.Service.Implement
       var result = await _genericRepository.UpdateAsync(entity);
       return _mapper.Map<ServiceDTO>(result);
     }
+
+    public async Task<IEnumerable<ServiceDTO>> GetServicesWithCategory()
+    {
+      var services = await _genericRepository.GetAllAsync(q => q.Include(s => s.Category));
+			return _mapper.Map<IEnumerable<ServiceDTO>>(services);
+    }
   }
 }
