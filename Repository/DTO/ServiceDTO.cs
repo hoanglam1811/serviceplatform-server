@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace Repository.DTO
 		public decimal? OriginalPrice { get; set; }
 		public decimal? DiscountPrice { get; set; }
 		public string? Status { get; set; }
-		public string? ImageUrl { get; set; }
+		public List<IFormFile>? Images { get; set; }
 	}
 
 	// DTO khi cập nhật
@@ -55,6 +56,6 @@ namespace Repository.DTO
 		public decimal? OriginalPrice { get; set; }
 		public decimal? DiscountPrice { get; set; }
 		public string? Status { get; set; }
-		public string? ImageUrl { get; set; }
+		public List<IFormFile>? Images { get; set; }
 	}
 }

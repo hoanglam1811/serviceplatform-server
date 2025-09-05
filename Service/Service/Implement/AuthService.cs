@@ -78,7 +78,6 @@ public class AuthService
     var images = await _cloudinaryService.UploadImagesAsync(dto.NationalId);
     newCustomer.NationalId = string.Join(", ", images);
 
-		// 4. Lưu DB
 		return await _userRepository.AddAsync(newCustomer);
 	}
 
