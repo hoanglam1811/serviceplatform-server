@@ -15,9 +15,11 @@ namespace Service.Service.Implement
 	public class ServiceService
 		: GenericService<Services, CreateServiceDTO, UpdateServiceDTO, ServiceDTO>, IServiceService
 	{
-		public ServiceService(IGenericRepository<Services> genericRepository, IMapper mapper)
+		private readonly CloudinaryService _cloudinaryService;
+		public ServiceService(IGenericRepository<Services> genericRepository, IMapper mapper, CloudinaryService cloudinaryService)
 			: base(genericRepository, mapper)
 		{
+			_cloudinaryService = cloudinaryService;
 		}
 
 		public async Task<IEnumerable<ServiceDTO>> GetServicesByUserIdAsync(Guid userId)
@@ -48,6 +50,16 @@ namespace Service.Service.Implement
     {
       var services = await _genericRepository.GetAllAsync(q => q.Include(s => s.Category));
 			return _mapper.Map<IEnumerable<ServiceDTO>>(services);
+    }
+
+    public async Task<ServiceDTO> AddWithImages(CreateServiceDTO dto)
+    {
+	var images = await _cloudinaryService.UploadImagesAsync(dto.Images);
+	var imageJoin = string.Join(", ", images);
+	var entity = _mapper.Map<Services>(dto);
+	entity.ImageUrl = imageJoin;
+	var service = await _genericRepository.AddAsync(entity);
+	return _mapper.Map<ServiceDTO>(service);
     }
   }
 }

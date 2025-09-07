@@ -16,5 +16,6 @@ namespace Service.Service.Interface
 		Task<IEnumerable<ServiceDTO>> GetServicesWithCategory();
 		Task<IEnumerable<ServiceDTO>> GetServicesByCategoryIdAsync(Guid categoryId);
 		Task<ServiceDTO> UpdateNoForeignId(UpdateServiceDTO dto);
+		Task<ServiceDTO> AddWithImages(CreateServiceDTO dto);
 	}
 }

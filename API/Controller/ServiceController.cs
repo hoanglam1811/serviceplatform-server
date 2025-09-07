@@ -33,9 +33,9 @@ namespace API.Controller
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create([FromBody] CreateServiceDTO dto)
+		public async Task<IActionResult> Create([FromForm] CreateServiceDTO dto)
 		{
-			var result = await _serviceService.AddAsync(dto);
+			var result = await _serviceService.AddWithImages(dto);
 			return Ok(ApiResponse<ServiceDTO>.SuccessResponse(result, "Service created successfully"));
 		}
 
