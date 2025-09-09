@@ -39,7 +39,8 @@ public class AuthenticationController : ControllerBase
             return Ok(ApiResponse<object>.SuccessResponse(new { 
               id = customer.Id,
               name = customer.FullName,
-              role = customer.Role 
+              role = customer.Role ,
+			  status = customer.Status
             }, "Customer logged in successfully"));
         }
         catch (Exception ex)
@@ -92,7 +93,8 @@ public class AuthenticationController : ControllerBase
         return Ok(ApiResponse<object>.SuccessResponse(new { 
           id = customer.Id,
           name = customer.FullName,
-          role = customer.Role 
+          role = customer.Role ,
+		  status = customer.Status ,
         }, "Customer registered successfully"));
     }
 
@@ -111,7 +113,8 @@ public class AuthenticationController : ControllerBase
         return Ok(ApiResponse<object>.SuccessResponse(new { 
           id = serviceProvider.Id,
           name = serviceProvider.FullName,
-          role = serviceProvider.Role 
+          role = serviceProvider.Role ,
+		  status = serviceProvider.Status ,
         }, "Service Provider registered successfully"));
 	}
 

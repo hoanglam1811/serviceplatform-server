@@ -28,6 +28,7 @@ public class JwtService
 				new Claim("username", user.Username.ToString()),
 				new Claim("fullName", user.FullName.ToString()),
 				new Claim("id", user.Id.ToString()),
+                new Claim("status", user.Status.ToString())
 			};
 
         var token = new JwtSecurityToken(
