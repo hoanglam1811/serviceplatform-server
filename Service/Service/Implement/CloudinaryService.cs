@@ -54,11 +54,26 @@ public class CloudinaryService
       return urls.ToArray();
     }
 
-    public async Task<string> DeleteImageAsync(string publicId)
+    public async Task<string> DeleteImageAsync(string url)
     {
-        var deletionParams = new DeletionParams(publicId);
-        var result = await _cloudinary.DestroyAsync(deletionParams);
-        return result.Result;
+      var uri = new Uri(url);
+      var segments = uri.AbsolutePath.Split('/'); 
+      var filename = segments.Last(); // e.g. "tyvkegjge6brmwd3dfrn.jpg"
+      var publicId = Path.GetFileNameWithoutExtension(filename); // remove .jpg
+      var deletionParams = new DeletionParams(publicId);
+      var result = await _cloudinary.DestroyAsync(deletionParams);
+      return result.Result;
+    }
+
+    public async Task<string[]> DeleteImagesAsync(string[] urls)
+    {
+      string[] result = [];
+      foreach(var url in urls)
+      {
+        var deleted = await DeleteImageAsync(url);
+        result.Append(deleted);
+      }
+      return result;
     }
 
     public async Task<List<string>> GetAllImageUrlsAsync()

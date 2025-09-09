@@ -38,10 +38,29 @@ namespace Service.Service.Implement
 
     public async Task<ServiceDTO> UpdateNoForeignId(UpdateServiceDTO dto)
     {
+      string imageJoin = "";
+      if(dto.Images != null && dto.Images.Count > 0)
+      {
+        var images = await _cloudinaryService.UploadImagesAsync(dto.Images);
+        imageJoin = string.Join(", ", images);
+      }
       var service = await _genericRepository.GetByIdAsync(dto.Id);
+
+      //Try delete old images
+      try
+      {
+        if(service != null && service.ImageUrl != null && service.ImageUrl != "")
+        {
+          _cloudinaryService.DeleteImagesAsync(service.ImageUrl.Split(", "));
+        }
+      }
+      catch(Exception ex){
+      }
+
       var entity = _mapper.Map<Services>(dto);
       entity.UserId = service.UserId;
       entity.Status = "Active";
+      entity.ImageUrl = imageJoin;
       var result = await _genericRepository.UpdateAsync(entity);
       return _mapper.Map<ServiceDTO>(result);
     }

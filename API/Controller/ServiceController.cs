@@ -40,7 +40,7 @@ namespace API.Controller
 		}
 
 		[HttpPut("{id:guid}")]
-		public async Task<IActionResult> Update(Guid id, [FromBody] UpdateServiceDTO dto)
+		public async Task<IActionResult> Update(Guid id, [FromForm] UpdateServiceDTO dto)
 		{
 			dto.Id = id;
 			var result = await _serviceService.UpdateNoForeignId(dto);
