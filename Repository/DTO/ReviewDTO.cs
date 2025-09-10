@@ -21,6 +21,7 @@ namespace Repository.DTO
 		public Guid BookingId { get; set; }
 		public int? Rating { get; set; }
 		public string? Comment { get; set; }
+		public DateTime? CreatedAt { get; set; }
 	}
 
 	public class UpdateReviewDTO
@@ -29,5 +30,6 @@ namespace Repository.DTO
 		public Guid BookingId { get; set; }
 		public int? Rating { get; set; }
 		public string? Comment { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 	}
 }
