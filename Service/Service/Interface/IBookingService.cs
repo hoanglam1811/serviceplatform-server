@@ -12,6 +12,7 @@ namespace Service.Service.Interface
 	{
 
 		Task<IEnumerable<BookingDTO>> GetBookingsByUserIdAsync(Guid userId);
+		Task<IEnumerable<BookingDTO>> GetBookingsByProviderIdAsync(Guid providerId);
 		Task<IEnumerable<BookingDTO>> GetBookingsByServiceIdAsync(Guid serviceId);
 		Task<bool> UpdateBookingStatusAsync(Guid bookingId, string status);
 	}

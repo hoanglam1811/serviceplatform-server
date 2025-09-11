@@ -81,6 +81,14 @@ namespace API.Controller
 			return Ok(ApiResponse<IEnumerable<BookingDTO>>.SuccessResponse(bookings, "Get bookings by service successfully"));
 		}
 
+    // GET by ProviderId
+		[HttpGet("provider/{providerId:guid}")]
+		public async Task<IActionResult> GetByProviderId(Guid providerId)
+		{
+			var bookings = await _bookingService.GetBookingsByProviderIdAsync(providerId);
+			return Ok(ApiResponse<IEnumerable<BookingDTO>>.SuccessResponse(bookings, "Get bookings by service successfully"));
+		}
+
 		// UPDATE STATUS
 		[HttpPut("{id:guid}/status")]
 		public async Task<IActionResult> UpdateStatus(Guid id, [FromQuery] string status)

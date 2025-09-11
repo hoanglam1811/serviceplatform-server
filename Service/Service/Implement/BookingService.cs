@@ -50,5 +50,15 @@ namespace Service.Service.Implement
 			await _genericRepository.UpdateAsync(booking);
 			return true;
 		}
-	}
+
+    public async Task<IEnumerable<BookingDTO>> GetBookingsByProviderIdAsync(Guid providerId)
+    {
+      var bookings = await _genericRepository.GetAllAsync(
+				q => q.Include(b => b.Service)
+			);
+
+			bookings = bookings.Where(b => b.Service.UserId == providerId).ToList();
+			return _mapper.Map<IEnumerable<BookingDTO>>(bookings);
+    }
+  }
 }
