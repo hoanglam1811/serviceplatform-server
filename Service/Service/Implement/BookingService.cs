@@ -23,6 +23,7 @@ namespace Service.Service.Implement
 		{
 			var bookings = await _genericRepository.GetAllAsync(
 				q => q.Include(b => b.Service)
+        .Include(b => b.User)
 			);
 
 			bookings = bookings.Where(b => b.UserId == userId).ToList();
@@ -33,6 +34,7 @@ namespace Service.Service.Implement
 		{
 			var bookings = await _genericRepository.GetAllAsync(
 				q => q.Include(b => b.User)
+        .Include(b => b.User)
 			);
 
 			bookings = bookings.Where(b => b.ServiceId == serviceId).ToList();
@@ -55,6 +57,7 @@ namespace Service.Service.Implement
     {
       var bookings = await _genericRepository.GetAllAsync(
 				q => q.Include(b => b.Service)
+        .Include(b => b.User)
 			);
 
 			bookings = bookings.Where(b => b.Service.UserId == providerId).ToList();

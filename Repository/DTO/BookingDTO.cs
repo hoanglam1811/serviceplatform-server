@@ -19,6 +19,7 @@ namespace Repository.DTO
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
     public ServiceDTO? Service { get; set; }
+    public UserDTO? User { get; set; }
 	}
 
 	public class CreateBookingDTO
