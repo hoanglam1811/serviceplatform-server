@@ -60,7 +60,10 @@ namespace Service.Service.Implement
       var entity = _mapper.Map<Services>(dto);
       entity.UserId = service.UserId;
       entity.Status = "Active";
-      entity.ImageUrl = imageJoin;
+      if(imageJoin == "")
+        entity.ImageUrl = service.ImageUrl;
+      else
+        entity.ImageUrl = imageJoin;
       var result = await _genericRepository.UpdateAsync(entity);
       return _mapper.Map<ServiceDTO>(result);
     }
