@@ -12,7 +12,7 @@ namespace Repository.Entities
 		public string? Name { get; set; }
 		public string? Description { get; set; }
 		public string? Type {  get; set; }
-		public string? Duration { get; set; }
+		public int? Duration { get; set; }
 		public string? ServiceArea {  get; set; }
 		public decimal? OriginalPrice { get; set; }
 		public decimal DiscountPrice { get; set; }
