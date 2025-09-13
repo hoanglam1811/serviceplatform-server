@@ -156,7 +156,7 @@ builder.Services.AddScoped<IProviderProfileService, ProviderProfileService>();
 builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddHttpClient<IPayOSService, PayOSService>();
+builder.Services.AddScoped<IPayOSService, PayOSService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<EmailService>();
@@ -195,6 +195,8 @@ app.UseCors("AllowFrontend");
 if (app.Environment.IsDevelopment())
 {
 }
+
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
 
 app.UseHttpsRedirection();
 app.UseMiddleware<JwtCookieMiddleware>();

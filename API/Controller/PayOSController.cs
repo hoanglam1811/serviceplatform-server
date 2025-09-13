@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repository.DTO;
 using Service.Service.Interface;
+using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using System.Text.Json.Serialization.Metadata;
 
 namespace API.Controller
 {
@@ -30,12 +34,33 @@ namespace API.Controller
 		}
 
 		[HttpPost("webhook")]
-		public async Task<IActionResult> Webhook([FromBody] object payload)
+		public async Task<IActionResult> Webhook([FromBody] PayOSWebhook payload)
 		{
 			var signature = Request.Headers["x-signature"].ToString();
-			var rawBody = payload.ToString();
+      var options = new JsonSerializerOptions
+      {
+        WriteIndented = true,
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+      };
 
-			var verified = await _payOSService.VerifyWebhookAsync(signature, rawBody);
+      // Use custom order resolver
+      options.TypeInfoResolver = new DefaultJsonTypeInfoResolver
+      {
+        Modifiers =
+        {
+          ti =>
+          {
+            // Sort properties alphabetically
+            ti.Properties.ToList().Sort((p1, p2) => string.Compare(p1.Name, p2.Name, StringComparison.Ordinal));
+          }
+        }
+      };
+
+      string json = JsonSerializer.Serialize(payload.data, options);
+
+			var verified = await _payOSService.VerifyWebhookAsync(signature, json);
+      System.Console.WriteLine(verified);
 			if (!verified)
 				return Unauthorized();
 

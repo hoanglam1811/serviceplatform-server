@@ -1,13 +1,10 @@
-﻿using Repository.DTO;
+﻿using Microsoft.Extensions.Configuration;
+using Repository.DTO;
 using Service.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Service.Service.Implement
 {
@@ -17,12 +14,14 @@ namespace Service.Service.Implement
 		private readonly string _clientId;
 		private readonly string _apiKey;
 		private readonly string _checksumKey;
+    private readonly IConfiguration _config;
 
-		public PayOSService(string clientId, string apiKey, string checksumKey)
+		public PayOSService(IConfiguration config)
 		{
-			_clientId = clientId;
-			_apiKey = apiKey;
-			_checksumKey = checksumKey;
+      _config = config;
+			_clientId = _config["PayOS:ClientId"];
+			_apiKey = _config["PayOS:ApiKey"];
+			_checksumKey = _config["PayOS:ChecksumKey"];
 
 			_httpClient = new HttpClient
 			{
@@ -36,6 +35,13 @@ namespace Service.Service.Implement
 		// 1. Tạo Payment Request
 		public async Task<PayOSPaymentResponseDTO> CreatePaymentAsync(PayOSPaymentRequestDTO request)
 		{
+      var orderCode = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+      var message = $"amount={request.amount}&cancelUrl={request.cancelUrl}&"+
+        $"description={request.description}&orderCode={orderCode}&returnUrl={request.returnUrl}";
+
+      request.orderCode = orderCode;
+      request.signature = CreateSignature(_checksumKey, message);
+
 			var json = JsonSerializer.Serialize(request);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -45,8 +51,11 @@ namespace Service.Service.Implement
 			if (!response.IsSuccessStatusCode)
 				throw new Exception($"PayOS error: {response.StatusCode} - {responseContent}");
 
-			return JsonSerializer.Deserialize<PayOSPaymentResponseDTO>(responseContent,
-				new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+      using var doc = JsonDocument.Parse(responseContent);
+      var dataElement = doc.RootElement.GetProperty("data");
+
+      return JsonSerializer.Deserialize<PayOSPaymentResponseDTO>(dataElement,
+				new JsonSerializerOptions {})!;
 		}
 
 		// 2. Lấy trạng thái Payment theo orderCode
@@ -71,5 +80,21 @@ namespace Service.Service.Implement
 
 			return Task.FromResult(signature == computedSignature);
 		}
+
+    public string CreateSignature(string key, string message)
+    {
+
+      // Convert key and message to byte arrays
+      var keyBytes = Encoding.UTF8.GetBytes(key);
+      var messageBytes = Encoding.UTF8.GetBytes(message);
+
+      // Compute HMAC-SHA256
+      using var hmac = new HMACSHA256(keyBytes);
+      var hashBytes = hmac.ComputeHash(messageBytes);
+
+      // Convert to hex string
+      var signature = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+      return signature;
+    }
 	}
 }

@@ -31,16 +31,16 @@ namespace Service.Service.Implement
 
 			var payOsRequest = new PayOSPaymentRequestDTO
 			{
-				Amount = dto.Amount,
-				OrderCode = payment.Id.ToString(),
-				ReturnUrl = "https://your-website.com/payment/success",
-				CancelUrl = "https://your-website.com/payment/cancel",
-				Description = $"Thanh toán booking {dto.BookingId}"
+				amount = dto.Amount,
+				orderCode = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+				returnUrl = "https://your-website.com/payment/success",
+				cancelUrl = "https://your-website.com/payment/cancel",
+				description = $"Thanh toán booking {dto.BookingId}"
 			};
 
 			var response = await _payOSService.CreatePaymentAsync(payOsRequest);
 
-			payment.PaymentUrl = response.PaymentUrl;
+			payment.PaymentUrl = response.checkoutUrl;
 
 			var entity = await _genericRepository.GetByIdAsync(payment.Id);
 			entity.PaymentUrl = payment.PaymentUrl;
