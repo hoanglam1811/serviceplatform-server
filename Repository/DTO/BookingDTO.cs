@@ -18,8 +18,8 @@ namespace Repository.DTO
 		public string? Note { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
-    public ServiceDTO? Service { get; set; }
-    public UserDTO? User { get; set; }
+		public ServiceDTO? Service { get; set; }
+		public UserDTO? User { get; set; }
 	}
 
 	public class CreateBookingDTO
@@ -31,6 +31,7 @@ namespace Repository.DTO
 		public string? Status { get; set; }
 		public string? PaymentStatus { get; set; }
 		public string? Note { get; set; }
+		public DateTime? CreatedAt { get; set; }
 	}
 
 	public class UpdateBookingDTO
@@ -43,5 +44,6 @@ namespace Repository.DTO
 		public string? Status { get; set; }
 		public string? PaymentStatus { get; set; }
 		public string? Note { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 	}
 }
