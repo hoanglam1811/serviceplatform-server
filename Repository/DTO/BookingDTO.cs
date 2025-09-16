@@ -20,6 +20,7 @@ namespace Repository.DTO
 		public DateTime? UpdatedAt { get; set; }
 		public ServiceDTO? Service { get; set; }
 		public UserDTO? User { get; set; }
+		public List<ReviewDTO> Reviews { get; set; } = new();
 	}
 
 	public class CreateBookingDTO

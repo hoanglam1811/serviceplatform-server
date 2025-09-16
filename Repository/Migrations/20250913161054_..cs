@@ -10,28 +10,28 @@ namespace Repository.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_ProviderProfiles_UserId",
-                table: "ProviderProfiles");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_ProviderProfiles_UserId",
+            //    table: "ProviderProfiles");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ProviderProfiles_UserId",
-                table: "ProviderProfiles",
-                column: "UserId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_ProviderProfiles_UserId",
+            //    table: "ProviderProfiles",
+            //    column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_ProviderProfiles_UserId",
-                table: "ProviderProfiles");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_ProviderProfiles_UserId",
+            //    table: "ProviderProfiles");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ProviderProfiles_UserId",
-                table: "ProviderProfiles",
-                column: "UserId",
-                unique: true);
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_ProviderProfiles_UserId",
+            //    table: "ProviderProfiles",
+            //    column: "UserId",
+            //    unique: true);
         }
     }
 }

@@ -62,15 +62,15 @@ public class MapperProfile : Profile
 
 		////CreateMap<Plan, PlanDTO>().ReverseMap();
 		//CreateMap<Plan, PlanDTO>()
-  //    .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src =>
-  //          src.ExercisePlans != null ? src.ExercisePlans.Select(ep => ep.Exercise) : null ))
-  //    .ReverseMap()
-  //    .ForMember(dest => dest.ExercisePlans, opt => opt.MapFrom(src =>
-  //          new List<ExercisePlan>() ));
+		//    .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src =>
+		//          src.ExercisePlans != null ? src.ExercisePlans.Select(ep => ep.Exercise) : null ))
+		//    .ReverseMap()
+		//    .ForMember(dest => dest.ExercisePlans, opt => opt.MapFrom(src =>
+		//          new List<ExercisePlan>() ));
 		//CreateMap<Plan, CreatePlanDTO>().ReverseMap();
 		//CreateMap<Plan, UpdatePlanDTO>().ReverseMap();
 
-  //  CreateMap<Report, ReviewDTO>().ReverseMap();
+		//  CreateMap<Report, ReviewDTO>().ReverseMap();
 		//CreateMap<Report, CreateReportDTO>().ReverseMap();
 		//CreateMap<Report, UpdateReportDTO>().ReverseMap();
 

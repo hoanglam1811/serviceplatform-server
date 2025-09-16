@@ -32,7 +32,6 @@ namespace Repository.DTO
 		public string Username { get; set; }  
 		public string Password { get; set; } 
 		public string FullName { get; set; }
-		public required string PasswordHashed { get; set; }
 		public string? Role { get; set; }
 		public string? AvatarUrl { get; set; }
 		public string Email { get; set; }
@@ -52,7 +51,6 @@ namespace Repository.DTO
 		public string Username { get; set; }
 		public string? FullName { get; set; }
 		public string? Role { get; set; }
-		public required string PasswordHashed { get; set; }
 		public string? AvatarUrl { get; set; }
 		public string? Email { get; set; }
 		public string? PhoneNumber { get; set; }

@@ -17,6 +17,7 @@ namespace Repository.DTO
 		public string? PhoneNumber { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
+		public UserDTO? User { get; set; }
 	}
 
 	// DTO khi tạo mới

@@ -21,5 +21,7 @@ namespace Repository.Entities
 		public User User { get; set; }
 		public Guid ServiceId { get; set; }
 		public Services Service { get; set; }
+
+		public ICollection<Review> Reviews { get; set; } = new List<Review>();
 	}
 }

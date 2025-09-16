@@ -23,5 +23,7 @@ namespace Repository.Entities
 		public string? Status { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
+
+		public ICollection<ProviderProfile> ProviderProfiles { get; set; } = new List<ProviderProfile>();
 	}
 }

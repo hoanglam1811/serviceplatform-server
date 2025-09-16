@@ -23,6 +23,7 @@ namespace Repository.DTO
 		public string? ImageUrl { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
+		public UserDTO User { get; set; }
 
     public ServiceCategoryDTO? Category { get; set; }
 	}
@@ -40,6 +41,7 @@ namespace Repository.DTO
 		public decimal? OriginalPrice { get; set; }
 		public decimal? DiscountPrice { get; set; }
 		public string? Status { get; set; }
+		public DateTime? CreatedAt { get; set; }
 		public List<IFormFile>? Images { get; set; }
 	}
 
@@ -56,6 +58,7 @@ namespace Repository.DTO
 		public decimal? OriginalPrice { get; set; }
 		public decimal? DiscountPrice { get; set; }
 		public string? Status { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 		public List<IFormFile>? Images { get; set; }
 	}
 }
