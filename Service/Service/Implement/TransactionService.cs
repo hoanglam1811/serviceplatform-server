@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Repository.DTO;
 using Repository.Entities;
 using Repository.Repository.Interface;
@@ -25,5 +26,19 @@ namespace Service.Service.Implement
 			var result = transactions.Where(t => t.WalletId == walletId);
 			return _mapper.Map<IEnumerable<TransactionDTO>>(result);
 		}
+
+		public async Task<IEnumerable<TransactionDTO>> GetTransactionsByUserIdAsync(Guid userId)
+		{
+			var transactions = await _genericRepository.GetAllAsync(
+				q => q.Include(t => t.Wallet)
+			);
+
+			var result = transactions
+				.Where(t => t.Wallet != null && t.Wallet.UserId == userId)
+				.ToList();
+
+			return _mapper.Map<IEnumerable<TransactionDTO>>(result);
+		}
+
 	}
 }

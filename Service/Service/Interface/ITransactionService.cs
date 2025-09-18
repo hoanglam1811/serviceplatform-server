@@ -12,5 +12,6 @@ namespace Service.Service.Interface
 		: IGenericService<Transaction, CreateTransactionDTO, UpdateTransactionDTO, TransactionDTO>
 	{
 		Task<IEnumerable<TransactionDTO>> GetTransactionsByWalletIdAsync(Guid walletId);
+		Task<IEnumerable<TransactionDTO>> GetTransactionsByUserIdAsync(Guid userId);
 	}
 }

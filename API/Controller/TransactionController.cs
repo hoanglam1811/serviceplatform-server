@@ -60,5 +60,13 @@ namespace API.Controller
 			var result = await _transactionService.GetTransactionsByWalletIdAsync(walletId);
 			return Ok(ApiResponse<IEnumerable<TransactionDTO>>.SuccessResponse(result, "Fetched transactions by wallet successfully"));
 		}
+
+		[HttpGet("by-user/{userId:guid}")]
+		public async Task<IActionResult> GetByUserId(Guid userId)
+		{
+			var result = await _transactionService.GetTransactionsByUserIdAsync(userId);
+			return Ok(ApiResponse<IEnumerable<TransactionDTO>>.SuccessResponse(result, "Fetched transactions by user successfully"));
+		}
+
 	}
 }
