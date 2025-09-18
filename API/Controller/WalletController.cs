@@ -43,7 +43,7 @@ namespace API.Controller
 		public async Task<IActionResult> Update(Guid id, [FromBody] UpdateWalletDTO dto)
 		{
 			dto.Id = id;
-			var result = await _walletService.UpdateAsync(dto);
+			var result = await _walletService.UpdateWithoutUserId(dto);
 			return Ok(ApiResponse<WalletDTO>.SuccessResponse(result, "Wallet updated successfully"));
 		}
 

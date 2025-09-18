@@ -25,5 +25,14 @@ namespace Service.Service.Implement
 			var wallet = wallets.FirstOrDefault(w => w.UserId == userId);
 			return _mapper.Map<WalletDTO?>(wallet);
 		}
-	}
+
+    public async Task<WalletDTO?> UpdateWithoutUserId(UpdateWalletDTO dto)
+    {
+      var wallet = await _genericRepository.GetByIdAsync(dto.Id);
+      var entity = _mapper.Map<Wallet>(dto);
+      entity.UserId = wallet.UserId;
+      var result = await _genericRepository.UpdateAsync(entity);
+      return _mapper.Map<WalletDTO>(result);
+    }
+  }
 }

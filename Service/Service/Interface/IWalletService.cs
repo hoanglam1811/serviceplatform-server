@@ -12,5 +12,6 @@ namespace Service.Service.Interface
 		: IGenericService<Wallet, CreateWalletDTO, UpdateWalletDTO, WalletDTO>
 	{
 		Task<WalletDTO?> GetByUserIdAsync(Guid userId);
+		Task<WalletDTO?> UpdateWithoutUserId(UpdateWalletDTO dto);
 	}
 }
