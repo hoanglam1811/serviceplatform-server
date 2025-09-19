@@ -39,5 +39,19 @@ namespace Service.Service.Implement
 			await _genericRepository.UpdateAsync(lp);
 			return true;
 		}
+
+		public async Task<bool> RedeemPointsAsync(Guid userId, int points)
+		{
+			var all = await _genericRepository.GetAllAsync();
+			var lp = all.FirstOrDefault(x => x.UserId == userId);
+
+			if (lp == null || (lp.Points ?? 0) < points) return false;
+
+			lp.Points -= points;
+			lp.UpdatedAt = DateTime.UtcNow;
+
+			await _genericRepository.UpdateAsync(lp);
+			return true;
+		}
 	}
 }

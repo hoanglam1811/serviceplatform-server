@@ -19,12 +19,15 @@ namespace Service.Service.Implement
 		{
 		}
 
-		// Ví dụ: tìm hồ sơ theo UserId
 		public async Task<ProviderProfileDTO?> GetByUserIdAsync(Guid userId)
 		{
 			var providers = await _genericRepository.GetAllAsync();
 			var provider = providers.FirstOrDefault(p => p.UserId == userId);
-			return _mapper.Map<ProviderProfileDTO?>(provider);
+
+			if (provider == null)
+				return null;
+
+			return _mapper.Map<ProviderProfileDTO>(provider);
 		}
 	}
 }

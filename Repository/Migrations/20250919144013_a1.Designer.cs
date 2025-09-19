@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository.Data;
 
@@ -10,9 +11,11 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ServiceSolutionDbContext))]
-    partial class ServiceSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250919144013_a1")]
+    partial class a1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,14 +227,14 @@ namespace Repository.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("BusinessPhone")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("CompanyName")
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TaxCode")
                         .HasColumnType("longtext");

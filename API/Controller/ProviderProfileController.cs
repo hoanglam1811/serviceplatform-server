@@ -40,12 +40,13 @@ namespace API.Controller
 		public async Task<IActionResult> GetByUserId(Guid userId)
 		{
 			var provider = await _providerProfileService.GetByUserIdAsync(userId);
-			if (provider == null)
-				return Ok(ApiResponse<ProviderProfileDTO>
-					.SuccessResponse(null, "Provider profile not found for this user"));
 
-			return Ok(ApiResponse<ProviderProfileDTO>
-				.SuccessResponse(provider, "Fetched provider profile successfully"));
+			if (provider == null)
+				return Ok(ApiResponse<ProviderProfileDTO?>.SuccessResponse(
+					null, "Provider profile not found for this user"));
+
+			return Ok(ApiResponse<ProviderProfileDTO?>.SuccessResponse(
+				provider, "Fetched provider profile successfully"));
 		}
 
 		[HttpPost]

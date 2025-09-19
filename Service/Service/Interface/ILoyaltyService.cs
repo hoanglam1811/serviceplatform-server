@@ -13,5 +13,6 @@ namespace Service.Service.Interface
 	{
 		Task<int?> GetPointsByUserIdAsync(Guid userId);
 		Task<bool> AddPointsAsync(Guid userId, int points);
+		Task<bool> RedeemPointsAsync(Guid userId, int points);
 	}
 }

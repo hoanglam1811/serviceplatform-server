@@ -14,7 +14,7 @@ namespace Repository.DTO
 		public string? Type { get; set; }
 		public string? Address { get; set; }
 		public string? TaxCode { get; set; }
-		public string? PhoneNumber { get; set; }
+		public string? BusinessPhone { get; set; }
 		public DateTime? CreatedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
 		public UserDTO? User { get; set; }
@@ -28,7 +28,7 @@ namespace Repository.DTO
 		public string? Type { get; set; }
 		public string? Address { get; set; }
 		public string? TaxCode { get; set; }
-		public string? PhoneNumber { get; set; }
+		public string? BusinessPhone { get; set; }
 	}
 
 	// DTO khi cập nhật
@@ -39,6 +39,6 @@ namespace Repository.DTO
 		public string? Type { get; set; }
 		public string? Address { get; set; }
 		public string? TaxCode { get; set; }
-		public string? PhoneNumber { get; set; }
+		public string? BusinessPhone { get; set; }
 	}
 }

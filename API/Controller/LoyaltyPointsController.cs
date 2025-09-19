@@ -39,5 +39,16 @@ namespace API.Controller
 			var result = await _loyaltyService.DeleteAsync(id);
 			return Ok(ApiResponse<LoyaltyPointDTO>.SuccessResponse(result, "LoyaltyPoint deleted successfully"));
 		}
+
+		[HttpPost("{userId}/redeem")]
+		public async Task<IActionResult> RedeemPoints(Guid userId, [FromQuery] int points)
+		{
+			var success = await _loyaltyService.RedeemPointsAsync(userId, points);
+			if (!success)
+				return BadRequest(ApiResponse<string>.Failure("Not enough points"));
+
+			return Ok(ApiResponse<string>.SuccessResponse("Points redeemed successfully"));
+		}
+
 	}
 }
