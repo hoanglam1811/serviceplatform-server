@@ -35,8 +35,8 @@ public class ServiceSolutionDbContext : DbContext
  
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json", true, true)
-            .AddJsonFile($"appsettings.{environment}.json", true, true)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+            .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: false)
             .Build();
 
         if (!optionsBuilder.IsConfigured)
